@@ -1,6 +1,5 @@
 package interfaces;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,14 +10,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JDesktopPane;
 import java.awt.event.ActionListener;
-import java.security.Principal;
 import java.awt.event.ActionEvent;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
 public class TelaPrincipal extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	JDesktopPane jdpPrincipal;
 
@@ -73,7 +74,7 @@ public class TelaPrincipal extends JFrame {
 		jdpPrincipal.setSize(new Dimension(990, 595));
 		jdpPrincipal.setMinimumSize(new Dimension(400, 400));
 		jdpPrincipal.setBackground(Color.LIGHT_GRAY);
-		jdpPrincipal.setBounds(0, 0, 990, 590);
+		jdpPrincipal.setBounds(0, 0, 990, 630);
 		contentPane.add(jdpPrincipal);
 		jdpPrincipal.setLayout(null);
 	}
