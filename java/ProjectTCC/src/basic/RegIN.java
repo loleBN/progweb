@@ -57,8 +57,8 @@ public class RegIN {
 	@Override
 	public String toString() {
 		if (data_hora==null){
-			return "<html>Nome: " + nome+"<br>"
-				+ "------------------------------------------" + " </span></html>";
+			return "<html>Nome: " + nome+"		entrada:"+Utils.getSoHorario(data_hora)+"<br>"
+				+ "-----------------------------------------------------------------------" + " </span></html>";
 		}
 		if (regId == -1) {
 			return "Nenhum registro realizado";
@@ -70,12 +70,12 @@ public class RegIN {
 				return "<html>Nome: " + nome  + "<br>"
 						+ Utils.getSoData(data_hora) + "<br>"
 						+ "entrada: " + Utils.getSoHorario(data_hora) + "<br>" 
-						+ "------------------------------------------" + " </span></html>";
+						+ "<br>" + " </span></html>";
 						
 			return "<html>Nome: " + nome  + "<br>"
 					+ Utils.getSoData(data_hora) + "<br>"
 					+ "saida: " + Utils.getSoHorario(data_hora) + "<br>" 
-					+ "------------------------------------------" + " </span></html>";
+					+ "<br>" + " </span></html>";
 		}
 	}
 	

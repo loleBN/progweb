@@ -11,11 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-
 import basic.RegIN;
 import basic.Utils;
 import webservice.WebService;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -31,6 +31,8 @@ public class JIFRelatorioHSM extends JInternalFrame {
 	JScrollPane scrollPane;
 	DefaultListModel<RegIN> registroLM;
 	private JButton btnSair;
+	ArrayList<RegIN> regs;
+
 	/**
 	 * Launch the application.
 	 */
@@ -68,6 +70,11 @@ public class JIFRelatorioHSM extends JInternalFrame {
 		scrollPane.setViewportView(listStatusIN);
 		
 		JButton btnSalvar = new JButton("SALVAR");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Utils.save(regs);
+			}
+		});
 		btnSalvar.setBounds(63, 381, 117, 25);
 		contentPane.add(btnSalvar);
 		
@@ -88,7 +95,6 @@ public class JIFRelatorioHSM extends JInternalFrame {
 	public JIFRelatorioHSM(int id) {
 		setIconifiable(true);
 		setClosable(true);
-		setMaximizable(true);
 		setBounds(50, 50, 434, 483);
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
@@ -106,7 +112,13 @@ public class JIFRelatorioHSM extends JInternalFrame {
 		listStatusIN = new JList<RegIN>(registroLM);
 		scrollPane.setViewportView(listStatusIN);
 		
+		
 		JButton btnSalvar = new JButton("SALVAR");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Utils.save(regs);
+			}
+		});
 		btnSalvar.setBounds(63, 381, 117, 25);
 		contentPane.add(btnSalvar);
 		
@@ -122,7 +134,7 @@ public class JIFRelatorioHSM extends JInternalFrame {
 		if(id==1){
 			setTitle("Relatório Hoje");	
 			try {
-				ArrayList<RegIN> regs = WebService.getRegsByDate(Utils.convertDateToString(new Date()));
+				regs = WebService.getRegsByDate(Utils.convertDateToString(new Date()),2);
 				registroLM.removeAllElements();
 				for (RegIN r : regs) {
 					registroLM.addElement(r);
@@ -138,7 +150,7 @@ public class JIFRelatorioHSM extends JInternalFrame {
 		}else if(id==2){ 
 			setTitle("Relatório Semanal");	
 			try {
-				ArrayList<RegIN> regs = WebService.getRegsByWeek();
+				regs = WebService.getRegsByWeek();
 				registroLM.removeAllElements();
 				for (RegIN r : regs) {
 					registroLM.addElement(r);
@@ -153,7 +165,7 @@ public class JIFRelatorioHSM extends JInternalFrame {
 		}else if(id==3){
 			setTitle("Relatório Mensal");	
 			try {
-				ArrayList<RegIN> regs = WebService.getRegsByMonth(Utils.getSoMes(new Date()));
+				regs = WebService.getRegsByMonth(Utils.getSoMes(new Date()));
 				registroLM.removeAllElements();
 				for (RegIN r : regs) {
 					registroLM.addElement(r);
@@ -171,4 +183,5 @@ public class JIFRelatorioHSM extends JInternalFrame {
 		scrollPane.setViewportView(listStatusIN);
 		
 	}
+
 }

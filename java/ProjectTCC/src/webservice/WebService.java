@@ -34,7 +34,7 @@ public class WebService {
 		return regs;
 	}
 	
-	public static ArrayList<RegIN> getRegsByDate(String date) throws IOException, JSONException {
+	public static ArrayList<RegIN> getRegsByDate(String date,int id) throws IOException, JSONException {
 		ArrayList<RegIN> regs = new ArrayList<RegIN>();
 		URL urlRegs = new URL("http://ufam-automation.net/loislene/getRegistroByData.php?date=" + date);
 		BufferedReader in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
@@ -44,10 +44,16 @@ public class WebService {
 		if(!inputLine.equals("-1")){
 			JSONArray regsL = new JSONArray(inputLine);
 			JSONObject r;
-	
-			for (int i = 0; i < regsL.length(); i++) {
-				r = new JSONObject(regsL.getString(i));
-				regs.add(new RegIN(i,r.getString("tag_rfid"), r.getString("nome"),r.getString("date_time"), r.getInt("status")));			
+			if(id==1){
+				for (int i = regsL.length()-1; i >= 0 ; i--) {
+					r = new JSONObject(regsL.getString(i));
+					regs.add(new RegIN(i,r.getString("tag_rfid"), r.getString("nome"),r.getString("date_time"), r.getInt("status")));			
+				}
+			}else{
+				for (int i=0; i<regsL.length(); i++) {
+					r = new JSONObject(regsL.getString(i));
+					regs.add(new RegIN(i,r.getString("tag_rfid"), r.getString("nome"),r.getString("date_time"), r.getInt("status")));			
+				}
 			}
 		} else{
 				regs.add(new RegIN(-1,"","", "",-1));		
@@ -101,9 +107,9 @@ public class WebService {
 					r = new JSONObject(regsL.getString(i));
 					regs.add(new RegIN(i,r.getString("tag_rfid"), r.getString("nome"),r.getString("date_time"), r.getInt("status")));			
 				}
-			} else{
-					regs.add(new RegIN(-1,"","", "",-1));		
-			}
+			} //else{
+			//		regs.add(new RegIN(-1,"","", "",-1));		
+			//}
 		}
 		return regs;
 	}

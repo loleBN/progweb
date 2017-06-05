@@ -50,7 +50,7 @@ public class TelaPrincipal extends JFrame {
 	 */
 	public TelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 100, 985, 600);
+		setBounds(500, 100, 980, 600);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -58,7 +58,7 @@ public class TelaPrincipal extends JFrame {
 		JMenu mnRelatorio = new JMenu("relatorio");
 		menuBar.add(mnRelatorio);
 		
-		JMenu mnOutros = new JMenu("Outros");
+		JMenu mnOutros = new JMenu("outros");
 		menuBar.add(mnOutros);
 		
 		JMenuItem mntmSobre = new JMenuItem("Sobre");
@@ -135,10 +135,10 @@ public class TelaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 				
 		jdpPrincipal = new JDesktopPane();
-		jdpPrincipal.setSize(new Dimension(975, 595));
+		jdpPrincipal.setSize(new Dimension(975, 590));
 		jdpPrincipal.setMinimumSize(new Dimension(400, 400));
 		jdpPrincipal.setBackground(Color.LIGHT_GRAY);
-		jdpPrincipal.setBounds(0, 0, 980, 575);
+		jdpPrincipal.setBounds(0, 0, 980, 572);
 		contentPane.add(jdpPrincipal);
 		jdpPrincipal.setLayout(null);
 		
@@ -147,7 +147,7 @@ public class TelaPrincipal extends JFrame {
 		
 		JLabel lblBack = new JLabel("");
 		lblBack.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/drawables/6.jpg")));
-		lblBack.setBounds(0, 0, 980, 575);
+		lblBack.setBounds(0, 0, 980, 572);
 		jdpPrincipal.add(lblBack);
 		frameRG.setVisible(true);
 		

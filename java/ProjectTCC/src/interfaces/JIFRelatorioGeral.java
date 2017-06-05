@@ -28,7 +28,7 @@ import java.awt.Font;
 
 import javax.swing.JList;
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 public class JIFRelatorioGeral extends JInternalFrame {
 
@@ -85,9 +85,9 @@ public class JIFRelatorioGeral extends JInternalFrame {
 
 		model = new DefaultListModel<RegIN>();
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(475, 193, 200, 225);
+		scrollPane.setBounds(475, 193, 200, 210);
 		
-				contentPane.add(scrollPane);
+		contentPane.add(scrollPane);
 		listRegByDate = new JList<RegIN>(model);
 		scrollPane.setViewportView(listRegByDate);
 		registroLM = new DefaultListModel<RegIN>();
@@ -123,7 +123,7 @@ public class JIFRelatorioGeral extends JInternalFrame {
 					GregorianCalendar g = (GregorianCalendar)evt.getNewValue();
 					System.out.println(evt.getPropertyName()+" - "+ Utils.convertDateToString(g.getTime()));
 					try {
-						ArrayList<RegIN> regs = WebService.getRegsByDate(Utils.convertDateToString(g.getTime()));
+						ArrayList<RegIN> regs = WebService.getRegsByDate(Utils.convertDateToString(g.getTime()),1);
 						model.removeAllElements();
 						for (RegIN r : regs) {
 							model.addElement(r);
@@ -143,7 +143,7 @@ public class JIFRelatorioGeral extends JInternalFrame {
 		
 		try {
 			System.out.println("try:"+Utils.convertDateToString(new Date()));
-			ArrayList<RegIN> regs = WebService.getRegsByDate(Utils.convertDateToString(new Date()));
+			ArrayList<RegIN> regs = WebService.getRegsByDate(Utils.convertDateToString(new Date()),1);
 			model.removeAllElements();
 			for (RegIN r : regs) {
 				model.addElement(r);
