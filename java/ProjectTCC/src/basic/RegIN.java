@@ -7,13 +7,7 @@ public class RegIN {
 	private String nome;
 	private int regId;
 		
-	
-	public RegIN(int regId,String taf_rfid, String nome) {
-		super();
-		this.regId = regId;
-		this.tag_rfid = taf_rfid;
-		this.nome = nome;
-	}
+
 	public RegIN(int regId,String taf_rfid, String nome, String data_hora, int status) {
 		super();
 		this.regId = regId;
@@ -56,8 +50,8 @@ public class RegIN {
 	
 	@Override
 	public String toString() {
-		if (data_hora==null){
-			return "<html>Nome: " + nome+"		entrada:"+Utils.getSoHorario(data_hora)+"<br>"
+		if (regId==-4){
+			return "<html> &emsp Nome: " + nome+"&emsp&emsp&emsp&emsp&emsp entrada: "+Utils.getSoHorario(data_hora)+"<br>"
 				+ "-----------------------------------------------------------------------" + " </span></html>";
 		}
 		if (regId == -1) {

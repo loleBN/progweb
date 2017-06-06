@@ -22,15 +22,17 @@ public class WebService {
 		BufferedReader in = new BufferedReader(new InputStreamReader(urlEventos.openStream()));
 		String inputLine;
 		inputLine = in.readLine();
-
-		JSONArray regsL = new JSONArray(inputLine);
-		JSONObject r;
-		System.out.println("RegsNOW: "+inputLine);
-		for (int i = 0; i < regsL.length(); i++) {
-			r = new JSONObject(regsL.getString(i));
-			regs.add(new RegIN(i,r.getString("tag_rfid"), r.getString("nome")));			
-		}
-		
+		if(!inputLine.equals("-1")){
+			JSONArray regsL = new JSONArray(inputLine);
+			JSONObject r;
+			System.out.println("RegsNOW: "+inputLine);
+			for (int i = 0; i < regsL.length(); i++) {
+				r = new JSONObject(regsL.getString(i));
+				regs.add(new RegIN(-4,r.getString("tag_rfid"), r.getString("nome"),r.getString("date_time"),1));			
+			}
+		}else{
+			regs.add(new RegIN(-1,"","", "",-1));		
+	}
 		return regs;
 	}
 	

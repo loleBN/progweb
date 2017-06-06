@@ -19,6 +19,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import javax.swing.JPanel;
@@ -27,6 +28,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 
 import javax.swing.JList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 
@@ -140,6 +143,32 @@ public class JIFRelatorioGeral extends JInternalFrame {
 		
 		
 		contentPane.add(calendar);
+		
+		JLabel lblSinc = new JLabel("");
+		lblSinc.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					ArrayList<RegIN> regsNow = WebService.getRegsNow();
+					if(regsNow.size() == 0) {
+						registroLM.removeAllElements();
+					}							
+					System.out.println("Got Event");
+					registroLM.removeAllElements();
+					for (RegIN rg : regsNow) {
+						System.out.println("Registro: " + rg);
+						registroLM.addElement(rg);
+					}
+									
+				} catch (Exception e1) {
+					registroLM.removeAllElements();
+					e1.printStackTrace();
+				}
+			}
+		});
+		lblSinc.setBounds(385, 15, 30, 30);
+		lblSinc.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/drawables/sync.png")));
+		contentPane.add(lblSinc);
 		
 		try {
 			System.out.println("try:"+Utils.convertDateToString(new Date()));
