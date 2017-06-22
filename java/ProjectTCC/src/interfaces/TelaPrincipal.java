@@ -78,7 +78,7 @@ public class TelaPrincipal extends JFrame {
 		});
 		mnOutros.add(mntmSobre);
 		
-		JMenuItem mntmHoje = new JMenuItem("Hoje");
+		JMenuItem mntmHoje = new JMenuItem("Por Data");
 		mntmHoje.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -95,7 +95,7 @@ public class TelaPrincipal extends JFrame {
 		});
 		mnRelatorio.add(mntmHoje);
 		
-		JMenuItem mntmSemanal = new JMenuItem("Semanal");
+		JMenuItem mntmSemanal = new JMenuItem("Por Semana");
 		mntmSemanal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -112,7 +112,7 @@ public class TelaPrincipal extends JFrame {
 		});
 		mnRelatorio.add(mntmSemanal);
 		
-		JMenuItem mntmMensal = new JMenuItem("Mensal");
+		JMenuItem mntmMensal = new JMenuItem("Por Mês");
 		mntmMensal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
