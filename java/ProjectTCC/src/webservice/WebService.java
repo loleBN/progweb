@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import basic.FreqGraph;
 import basic.RegIN;
+import basic.Tag;
 import basic.Utils;
 
 public class WebService {
@@ -157,5 +158,106 @@ public class WebService {
 		return regs;
 	}
 	
+	public static ArrayList<Tag> getFHByWeek(Date date_) throws IOException, JSONException {
+		ArrayList<RegIN> regs = new ArrayList<RegIN>();
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		ArrayList<String> datas = new ArrayList<String>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date_);  
+		int day = cal.get(Calendar.DAY_OF_WEEK);
+		cal.add(Calendar.DATE, -day);
+		
+		cal.add(Calendar.DATE, +1);
+		String d1=Utils.convertDateToString(cal.getTime());
+		cal.add(Calendar.DATE, +1);
+		String d2=Utils.convertDateToString(cal.getTime());
+		cal.add(Calendar.DATE, +1);
+		String d3=Utils.convertDateToString(cal.getTime());
+		cal.add(Calendar.DATE, +1);
+		String d4=Utils.convertDateToString(cal.getTime());
+		cal.add(Calendar.DATE, +1);
+		String d5=Utils.convertDateToString(cal.getTime());
+		cal.add(Calendar.DATE, +1);
+		String d6=Utils.convertDateToString(cal.getTime());
+		cal.add(Calendar.DATE, +1);
+		String d7 =Utils.convertDateToString(cal.getTime());
+						
+		String inputLine ;
+		URL urlRegs = new URL("http://ufam-automation.net/loislene/getTags.php");
+		BufferedReader in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
+		inputLine = in.readLine();
+		if(!inputLine.equals("-1")){
+			JSONArray tagsL = new JSONArray(inputLine);
+			JSONObject tag;
 	
+			for (int i = 0; i < tagsL.length(); i++) {
+				tag = new JSONObject(tagsL.getString(i));
+				tags.add(new Tag(tag.getString("tag_rfid"), tag.getString("nome")));			
+				System.out.println("tag_rfid: "+tag.getString("tag_rfid"));
+				urlRegs = new URL("http://ufam-automation.net/loislene/getFHSem.php?tag_rfid="+tag.getString("tag_rfid")+"&d1="+d1+"&d2="+d2+"&d3="+d3+"&d4="+d4+"&d5="+d5+"&d6="+d6+"&d7="+d7);
+				in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
+				inputLine = in.readLine();
+				System.out.println("url:"+"http://ufam-automation.net/loislene/getFHSem.php?tag_rfid="+tag.getString("tag_rfid")+"&d1="+d1+"&d2="+d2+"&d3="+d3+"&d4="+d4+"&d5="+d5+"&d6="+d6+"&d7="+d7);
+				System.out.println("inputline: "+inputLine);
+						
+				if(!inputLine.equals("-1")){
+					JSONArray regsL = new JSONArray(inputLine);
+					JSONObject reg;
+					
+					for (int c = 0; c < regsL.length(); c++) {
+						reg = new JSONObject(regsL.getString(c));
+						datas.add(reg.getString("dt"));	
+						regs.add(new RegIN(c,reg.getString("tag"), reg.getString("nome"),reg.getString("dt"), reg.getInt("status")));			
+					}
+					tags.get(i).setFrequencia_semanal(datas);
+					tags.get(i).setRegistros(regs);
+					System.out.println("datas size: "+datas.size());
+					System.out.println("tag:"+tags.get(i).getNome()+" CH: "+tags.get(i).getFrequencia_semanal());
+					for (int j = 0; j < datas.size(); j++) {
+						datas.remove(j);
+						regs.remove(j);
+					}
+				} 
+			}
+		}
+		return tags;
+	}
+	
+public static ArrayList<Tag> getFHByMonth(String month) throws IOException, JSONException {
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		ArrayList<String> datas = new ArrayList<String>();
+						
+		String inputLine ;
+		URL urlRegs = new URL("http://ufam-automation.net/loislene/getTags.php");
+		BufferedReader in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
+		inputLine = in.readLine();
+		if(!inputLine.equals("-1")){
+			JSONArray tagsL = new JSONArray(inputLine);
+			JSONObject tag;
+	
+			for (int i = 0; i < tagsL.length(); i++) {
+				tag = new JSONObject(tagsL.getString(i));
+				tags.add(new Tag(tag.getString("tag_rfid"), tag.getString("nome")));			
+				
+				urlRegs = new URL("http://ufam-automation.net/loislene/getFHMen.php?tag_rfid="+tag.getString("tag_rfid")+"&mes="+month);
+				in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
+				inputLine = in.readLine();
+						
+				if(!inputLine.equals("-1")){
+					JSONArray dataL = new JSONArray(inputLine);
+					JSONObject data;
+					
+					for (int c = 0; c < dataL.length(); c++) {
+						data = new JSONObject(dataL.getString(c));
+						datas.add(data.getString("dt"));			
+					}
+				} 
+				tags.get(i).setFrequencia_mensal(datas);
+				for (int j = 0; j < datas.size(); j++) {
+					datas.remove(j);
+				}
+			}
+		}
+		return tags;
+	}
 }

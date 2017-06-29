@@ -31,7 +31,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 
-public class JIFRelatorioHSM extends JInternalFrame {
+public class JIFRelatorioMes extends JInternalFrame {
 
 	/**
 	 * 
@@ -58,7 +58,7 @@ public class JIFRelatorioHSM extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JIFRelatorioHSM frame = new JIFRelatorioHSM();
+					JIFRelatorioMes frame = new JIFRelatorioMes();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,7 +67,7 @@ public class JIFRelatorioHSM extends JInternalFrame {
 		});
 	}
 	
-	public JIFRelatorioHSM() {
+	public JIFRelatorioMes() {
 		setIconifiable(true);
 		setClosable(true);
 		setBounds(50, 50, 434, 483);
@@ -84,7 +84,7 @@ public class JIFRelatorioHSM extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JIFRelatorioHSM(int id) {
+	public JIFRelatorioMes(int id) {
 		
 		id_ = id;
 		
@@ -127,7 +127,7 @@ public class JIFRelatorioHSM extends JInternalFrame {
 		contentPane.add(btnSair);
 		
 		JButton btnGraph = new JButton("");
-		btnGraph.setIcon(new ImageIcon(JIFRelatorioHSM.class.getResource("/drawables/graph.png")));
+		btnGraph.setIcon(new ImageIcon(JIFRelatorioMes.class.getResource("/drawables/graph.png")));
 		btnGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

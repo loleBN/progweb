@@ -26,6 +26,10 @@ public class TelaPrincipal extends JFrame {
 	private JPanel contentPane;
 	JDesktopPane jdpPrincipal;
 	JIFRelatorioHSM obj;
+	JIFRelData objData;
+	JIFRelSemana objSemana;
+	JIFRelMes objMes;
+	
 	final JIFRelatorioGeral frameRG; 
 
 	/**
@@ -69,8 +73,8 @@ public class TelaPrincipal extends JFrame {
 				} catch (PropertyVetoException e1) {
 					e1.printStackTrace();
 				}
-				if(obj!=null)
-					obj.dispose();
+				//if(obj!=null)
+				//	obj.dispose();
 				JIFSobre objSobre = new JIFSobre();
 				jdpPrincipal.add(objSobre);
 				objSobre.setVisible(true);
@@ -86,11 +90,11 @@ public class TelaPrincipal extends JFrame {
 				} catch (PropertyVetoException e1) {
 					e1.printStackTrace();
 				}
-				if(obj!=null)
-					obj.dispose();
-				obj = new JIFRelatorioHSM(1);
-				jdpPrincipal.add(obj);
-				obj.setVisible(true);
+				//if(obj!=null)
+					//obj.dispose();
+				objData = new JIFRelData();
+				jdpPrincipal.add(objData);
+				objData.setVisible(true);
 			}
 		});
 		mnRelatorio.add(mntmHoje);
@@ -103,11 +107,11 @@ public class TelaPrincipal extends JFrame {
 				} catch (PropertyVetoException e1) {
 					e1.printStackTrace();
 				}
-				if(obj!=null)
-					obj.dispose();
-				obj = new JIFRelatorioHSM(2);
-				jdpPrincipal.add(obj);
-				obj.setVisible(true);
+				//if(obj!=null)
+					//obj.dispose();
+				objSemana = new JIFRelSemana();
+				jdpPrincipal.add(objSemana);
+				objSemana.setVisible(true);
 			}
 		});
 		mnRelatorio.add(mntmSemanal);
@@ -120,11 +124,11 @@ public class TelaPrincipal extends JFrame {
 				} catch (PropertyVetoException e1) {
 					e1.printStackTrace();
 				}
-				if(obj!=null)
-					obj.dispose();
-				obj = new JIFRelatorioHSM(3);
-				jdpPrincipal.add(obj);
-				obj.setVisible(true);
+				//if(obj!=null)
+					//obj.dispose();
+				objMes = new JIFRelMes();
+				jdpPrincipal.add(objMes);
+				objMes.setVisible(true);
 			}
 		});
 		mnRelatorio.add(mntmMensal);

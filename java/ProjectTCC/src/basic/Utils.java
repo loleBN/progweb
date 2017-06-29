@@ -94,6 +94,25 @@ public class Utils {
 		return null;
 	}
 	
+	public static double getDiferencaData(String dt1, String dt2) {
+		Date dtInicial, dtFinal;
+		try {
+			dtInicial = new SimpleDateFormat("dd/MM/yyyy-HH:mm").parse(dt1);
+			dtFinal = new SimpleDateFormat("dd/MM/yyyy-HH:mm").parse(dt2);
+			
+	        long milisecondBegin = dtInicial.getTime();
+	        long milisecondEnd = dtFinal.getTime();
+	        long milisecondResult = -milisecondBegin + milisecondEnd;
+	        
+	        return (milisecondResult /3600000.0) ;
+	        
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0.0;
+	}
+	
 	public static void save(ArrayList<RegIN> array ) {
 		try{
 			JFileChooser salvandoArquivo = new JFileChooser();
