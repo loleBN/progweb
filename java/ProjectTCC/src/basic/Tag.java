@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Tag {
-	private int tagId;
 	private String tag_rfid;
 	private String nome;
 	private int frequencia_semanal;
@@ -86,19 +85,14 @@ public class Tag {
 	
 	@Override
 	public String toString() {
-		if (tagId==-4){
-			return "<html> &emsp " + nome+"&emsp&emsp&emsp&emsp&emsp&emsp&emsp CH: "+frequencia_mensal+"h<br>"
-					+ " </span></html>";
-		}
-		if (tagId == -1) {
-			return "Nenhum registro realizado";
-		} 
-		if (tagId == -3) {
-			return "Erro ao carregar dados do servidor!";
-		} else {						
+		if (frequencia_semanal!=0){			
 			return "<html> &emsp " + nome+"&emsp&emsp&emsp&emsp CH: "+frequencia_semanal+"h<br>"
 					+ " </span></html>";
+		}else if (frequencia_mensal!=0){			
+			return "<html> &emsp " + nome+"&emsp&emsp&emsp&emsp CH: "+frequencia_mensal+"h<br>"
+					+ " </span></html>";
 		}
+		return "sem registro de carga horaria";
 	}
 	
 }

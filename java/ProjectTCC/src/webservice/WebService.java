@@ -246,7 +246,7 @@ public static ArrayList<Tag> getFHByMonth(String month) throws IOException, JSON
 				urlRegs = new URL("http://ufam-automation.net/loislene/getFHMen.php?tag_rfid="+tag.getString("tag_rfid")+"&mes="+month);
 				in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
 				inputLine = in.readLine();
-						System.out.println("registros do mes selecionado: "+inputLine);
+						
 				if(!inputLine.equals("-1")){
 					JSONArray regsL = new JSONArray(inputLine);
 					JSONObject reg;

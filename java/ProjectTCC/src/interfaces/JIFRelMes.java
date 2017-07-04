@@ -165,7 +165,7 @@ public class JIFRelMes extends JInternalFrame {
 		        	 if (r != null && r.contains(evt.getPoint())) { 
 		        		 // Double-click detected
 		        		 int index = list.locationToIndex(evt.getPoint());
-		        		 System.out.println("reg  sizemensal:"+tags.get(index).getRegistros().size());
+		        		 
 		        		 if(tags.get(index).getFrequencia_mensal()>0){
 		        			 JIFRelatorioPorTag obj = new JIFRelatorioPorTag(tags.get(index).getRegistros());
 		        			 getDesktopPane().add(obj);
