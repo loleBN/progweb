@@ -19,6 +19,7 @@ import basic.Utils;
 
 public class WebService {
 	public static ArrayList<RegIN> getRegsNow() throws IOException, JSONException {
+		System.out.println("Baixando Dados...");
 		ArrayList<RegIN> regs = new ArrayList<RegIN>();
 		URL urlEventos = new URL("http://ufam-automation.net/loislene/getStatusIN.php");
 		BufferedReader in = new BufferedReader(new InputStreamReader(urlEventos.openStream()));
@@ -27,7 +28,7 @@ public class WebService {
 		if(!inputLine.equals("-1")){
 			JSONArray regsL = new JSONArray(inputLine);
 			JSONObject r;
-			System.out.println("RegsNOW: "+inputLine);
+			
 			for (int i = 0; i < regsL.length(); i++) {
 				r = new JSONObject(regsL.getString(i));
 				regs.add(new RegIN(-4,r.getString("tag_rfid"), r.getString("nome"),r.getString("date_time"),1));			
@@ -39,6 +40,7 @@ public class WebService {
 	}
 	
 	public static ArrayList<RegIN> getRegsByDate(String date,int id) throws IOException, JSONException {
+		System.out.println("Baixando Dados...");
 		ArrayList<RegIN> regs = new ArrayList<RegIN>();
 		URL urlRegs = new URL("http://ufam-automation.net/loislene/getRegistroByData.php?date=" + date);
 		BufferedReader in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
@@ -66,7 +68,7 @@ public class WebService {
 		return regs;
 	}
 	public static ArrayList<RegIN> getRegsByMonth(String month) throws IOException, JSONException {
-		System.out.println("month do getBYMonth:"+month);
+		System.out.println("Baixando Dados...");
 		ArrayList<RegIN> regs = new ArrayList<RegIN>();
 		URL urlRegs = new URL("http://ufam-automation.net/loislene/getRegistroMensal.php?mes=" + month);
 		BufferedReader in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
@@ -88,6 +90,7 @@ public class WebService {
 		return regs;
 	}
 	public static ArrayList<RegIN> getRegsByWeek(Date date_) throws IOException, JSONException {
+		System.out.println("Baixando Dados...");
 		ArrayList<RegIN> regs = new ArrayList<RegIN>();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date_);  
@@ -117,6 +120,7 @@ public class WebService {
 		return regs;
 	}
 	public static ArrayList<FreqGraph> getFreqByWeek(Date date_) throws IOException, JSONException {
+		System.out.println("Baixando Dados...");
 		ArrayList<FreqGraph> regs = new ArrayList<FreqGraph>();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date_);  
@@ -143,7 +147,6 @@ public class WebService {
 			BufferedReader in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
 			String inputLine;
 			inputLine = in.readLine();
-			System.out.println(inputLine);
 	
 			if(!inputLine.equals("-1")){
 				JSONArray regsL = new JSONArray(inputLine);
@@ -159,9 +162,9 @@ public class WebService {
 	}
 	
 	public static ArrayList<Tag> getFHByWeek(Date date_) throws IOException, JSONException {
-		ArrayList<RegIN> regs = new ArrayList<RegIN>();
+		System.out.println("Baixando Dados...");
+		
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		ArrayList<String> datas = new ArrayList<String>();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date_);  
 		int day = cal.get(Calendar.DAY_OF_WEEK);
@@ -191,14 +194,16 @@ public class WebService {
 			JSONObject tag;
 	
 			for (int i = 0; i < tagsL.length(); i++) {
+				
+				ArrayList<RegIN> regs = new ArrayList<RegIN>();
+				ArrayList<String> datas = new ArrayList<String>();
+				
 				tag = new JSONObject(tagsL.getString(i));
 				tags.add(new Tag(tag.getString("tag_rfid"), tag.getString("nome")));			
-				System.out.println("tag_rfid: "+tag.getString("tag_rfid"));
+				
 				urlRegs = new URL("http://ufam-automation.net/loislene/getFHSem.php?tag_rfid="+tag.getString("tag_rfid")+"&d1="+d1+"&d2="+d2+"&d3="+d3+"&d4="+d4+"&d5="+d5+"&d6="+d6+"&d7="+d7);
 				in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
 				inputLine = in.readLine();
-				System.out.println("url:"+"http://ufam-automation.net/loislene/getFHSem.php?tag_rfid="+tag.getString("tag_rfid")+"&d1="+d1+"&d2="+d2+"&d3="+d3+"&d4="+d4+"&d5="+d5+"&d6="+d6+"&d7="+d7);
-				System.out.println("inputline: "+inputLine);
 						
 				if(!inputLine.equals("-1")){
 					JSONArray regsL = new JSONArray(inputLine);
@@ -207,16 +212,11 @@ public class WebService {
 					for (int c = 0; c < regsL.length(); c++) {
 						reg = new JSONObject(regsL.getString(c));
 						datas.add(reg.getString("dt"));	
-						regs.add(new RegIN(c,reg.getString("tag"), reg.getString("nome"),reg.getString("dt"), reg.getInt("status")));			
+						regs.add(new RegIN(-2,reg.getString("tag"), reg.getString("nome"),reg.getString("dt"), reg.getInt("status")));
 					}
 					tags.get(i).setFrequencia_semanal(datas);
 					tags.get(i).setRegistros(regs);
-					System.out.println("datas size: "+datas.size());
-					System.out.println("tag:"+tags.get(i).getNome()+" CH: "+tags.get(i).getFrequencia_semanal());
-					for (int j = 0; j < datas.size(); j++) {
-						datas.remove(j);
-						regs.remove(j);
-					}
+										
 				} 
 			}
 		}
@@ -224,9 +224,9 @@ public class WebService {
 	}
 	
 public static ArrayList<Tag> getFHByMonth(String month) throws IOException, JSONException {
+	System.out.println("Baixando Dados... Mes: "+month);
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		ArrayList<String> datas = new ArrayList<String>();
-						
+								
 		String inputLine ;
 		URL urlRegs = new URL("http://ufam-automation.net/loislene/getTags.php");
 		BufferedReader in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
@@ -236,26 +236,28 @@ public static ArrayList<Tag> getFHByMonth(String month) throws IOException, JSON
 			JSONObject tag;
 	
 			for (int i = 0; i < tagsL.length(); i++) {
+				
+				ArrayList<String> datas = new ArrayList<String>();
+				ArrayList<RegIN> regs = new ArrayList<RegIN>();
+				
 				tag = new JSONObject(tagsL.getString(i));
 				tags.add(new Tag(tag.getString("tag_rfid"), tag.getString("nome")));			
 				
 				urlRegs = new URL("http://ufam-automation.net/loislene/getFHMen.php?tag_rfid="+tag.getString("tag_rfid")+"&mes="+month);
 				in = new BufferedReader(new InputStreamReader(urlRegs.openStream()));
 				inputLine = in.readLine();
-						
+						System.out.println("registros do mes selecionado: "+inputLine);
 				if(!inputLine.equals("-1")){
-					JSONArray dataL = new JSONArray(inputLine);
-					JSONObject data;
-					
-					for (int c = 0; c < dataL.length(); c++) {
-						data = new JSONObject(dataL.getString(c));
-						datas.add(data.getString("dt"));			
+					JSONArray regsL = new JSONArray(inputLine);
+					JSONObject reg;
+					for (int c = 0; c < regsL.length(); c++) {
+						reg = new JSONObject(regsL.getString(c));
+						datas.add(reg.getString("dt"));	
+						regs.add(new RegIN(-10,reg.getString("tag"), reg.getString("nome"),reg.getString("dt"), reg.getInt("status")));		
 					}
 				} 
 				tags.get(i).setFrequencia_mensal(datas);
-				for (int j = 0; j < datas.size(); j++) {
-					datas.remove(j);
-				}
+				tags.get(i).setRegistros(regs);
 			}
 		}
 		return tags;

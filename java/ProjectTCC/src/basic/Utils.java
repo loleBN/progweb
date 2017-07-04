@@ -27,7 +27,7 @@ public class Utils {
     }
 	
 	public static String convertDateToStringBR(Date dateInString){
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy-HH:mm");
         String date = null;
         try {
             date = format.format(dateInString);
@@ -131,6 +131,64 @@ public class Utils {
 		    gravarArq.printf("REGISTROS%n");
 		    for (int i=0; i<array.size(); i++) {
 		      gravarArq.printf(getDTH(array.get(i).getData_hora())+ " " + array.get(i).getNome() +"%n");
+		    }
+		    gravarArq.printf("%n");
+		 
+		    arq.close();	
+		  
+		    JOptionPane.showMessageDialog(new Frame(),
+		        "Arquivo salvo com sucesso!");
+		} catch (Exception e){
+			e.getMessage();
+			}
+	}
+	public static void saveCHS(ArrayList<Tag> array ) {
+		try{
+			JFileChooser salvandoArquivo = new JFileChooser();
+		    int resultado = salvandoArquivo.showSaveDialog(null);
+		    if (resultado != JFileChooser.APPROVE_OPTION) {
+		        return;
+		    }
+		    String path = salvandoArquivo.getSelectedFile().getPath();
+		    System.out.println("file path"+path);
+		    
+			System.out.println(path);
+			
+			FileWriter arq = new FileWriter(path);
+		    PrintWriter gravarArq = new PrintWriter(arq);
+		 
+		    gravarArq.printf("RELATORIO DE CH%n");
+		    for (int i=0; i<array.size(); i++) {
+		      gravarArq.printf(array.get(i).getNome()+ " " + array.get(i).getFrequencia_semanal() +"%n");
+		    }
+		    gravarArq.printf("%n");
+		 
+		    arq.close();	
+		  
+		    JOptionPane.showMessageDialog(new Frame(),
+		        "Arquivo salvo com sucesso!");
+		} catch (Exception e){
+			e.getMessage();
+			}
+	}
+	public static void saveCHM(ArrayList<Tag> array ) {
+		try{
+			JFileChooser salvandoArquivo = new JFileChooser();
+		    int resultado = salvandoArquivo.showSaveDialog(null);
+		    if (resultado != JFileChooser.APPROVE_OPTION) {
+		        return;
+		    }
+		    String path = salvandoArquivo.getSelectedFile().getPath();
+		    System.out.println("file path"+path);
+		    
+			System.out.println(path);
+			
+			FileWriter arq = new FileWriter(path);
+		    PrintWriter gravarArq = new PrintWriter(arq);
+		 
+		    gravarArq.printf("RELATORIO DE CH%n");
+		    for (int i=0; i<array.size(); i++) {
+		      gravarArq.printf(array.get(i).getNome()+ " " + array.get(i).getFrequencia_mensal() +"%n");
 		    }
 		    gravarArq.printf("%n");
 		 

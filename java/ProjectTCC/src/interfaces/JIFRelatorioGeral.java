@@ -26,8 +26,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.Font;
+import java.awt.Frame;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -88,7 +91,7 @@ public class JIFRelatorioGeral extends JInternalFrame {
 
 		model = new DefaultListModel<RegIN>();
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(475, 193, 200, 210);
+		scrollPane.setBounds(465, 180, 250, 220);
 		
 		contentPane.add(scrollPane);
 		listRegByDate = new JList<RegIN>(model);
@@ -106,25 +109,23 @@ public class JIFRelatorioGeral extends JInternalFrame {
 			if(regsNow.size() == 0) {
 				registroLM.removeAllElements();
 			}							
-			System.out.println("Got Event");
 			registroLM.removeAllElements();
 			for (RegIN rg : regsNow) {
-				System.out.println("Registro: " + rg);
 				registroLM.addElement(rg);
 			}
 							
 		} catch (Exception e1) {
 			registroLM.removeAllElements();
 			e1.printStackTrace();
+			JOptionPane.showMessageDialog(new Frame(), "verifique sua conexao de internet!");
 		}			
 		
 		calendar = new JCalendar();
-		calendar.setBounds(479, 25, 191, 153);
+		calendar.setBounds(460, 25, 250, 153);
 		calendar.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if ("calendar".equals(evt.getPropertyName())){
 					GregorianCalendar g = (GregorianCalendar)evt.getNewValue();
-					System.out.println(evt.getPropertyName()+" - "+ Utils.convertDateToString(g.getTime()));
 					try {
 						ArrayList<RegIN> regs = WebService.getRegsByDate(Utils.convertDateToString(g.getTime()),1);
 						model.removeAllElements();
@@ -153,10 +154,8 @@ public class JIFRelatorioGeral extends JInternalFrame {
 					if(regsNow.size() == 0) {
 						registroLM.removeAllElements();
 					}							
-					System.out.println("Got Event");
 					registroLM.removeAllElements();
 					for (RegIN rg : regsNow) {
-						System.out.println("Registro: " + rg);
 						registroLM.addElement(rg);
 					}
 									
@@ -171,12 +170,10 @@ public class JIFRelatorioGeral extends JInternalFrame {
 		contentPane.add(lblSinc);
 		
 		try {
-			System.out.println("try:"+Utils.convertDateToString(new Date()));
 			ArrayList<RegIN> regs = WebService.getRegsByDate(Utils.convertDateToString(new Date()),1);
 			model.removeAllElements();
 			for (RegIN r : regs) {
 				model.addElement(r);
-				System.out.println("r: "+r);
 			}
 			if(regs.size() == 0) {
 				model.addElement(new RegIN(-1,"", "","", -1));

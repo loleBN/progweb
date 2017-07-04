@@ -1,29 +1,30 @@
 package basic;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Tag {
 	private int tagId;
-	private String taf_rfid;
+	private String tag_rfid;
 	private String nome;
 	private int frequencia_semanal;
 	private int frequencia_mensal;
 	private ArrayList<RegIN> registros;
 		
-	public Tag(String taf_rfid, String nome) {
+	public Tag(String tag_rfid, String nome) {
 		super();
-		this.taf_rfid = taf_rfid;
+		this.tag_rfid = tag_rfid;
 		this.nome = nome;
 		this.frequencia_semanal = 0;
 		this.frequencia_mensal = 0;
 		this.registros = new ArrayList<RegIN>();
 	}
 	
-	public String getTaf_rfid() {
-		return taf_rfid;
+	public String getTag_rfid() {
+		return tag_rfid;
 	}
 	public void setTaf_rfid(String taf_rfid) {
-		this.taf_rfid = taf_rfid;
+		this.tag_rfid = taf_rfid;
 	}
 	public String getNome() {
 		return nome;
@@ -43,7 +44,12 @@ public class Tag {
 				horas=horas+Utils.getDiferencaData(datas.get(i), datas.get(i+1));
 			}
 		}else{
-			horas=-1;
+			for (int i = 0; i < datas.size(); i=i+2) {
+				if(i==datas.size()-1)
+					horas=horas+Utils.getDiferencaData(datas.get(i), Utils.convertDateToStringBR(new Date()));
+				else
+					horas=horas+Utils.getDiferencaData(datas.get(i), datas.get(i+1));
+			}
 		}
 		this.frequencia_semanal = (int) horas;
 	}
@@ -59,9 +65,15 @@ public class Tag {
 				horas=horas+Utils.getDiferencaData(datas.get(i), datas.get(i+1));
 			}
 		}else{
-			horas=-1;
+			for (int i = 0; i < datas.size(); i=i+2) {
+				if(i==datas.size()-1)
+					horas=horas+Utils.getDiferencaData(datas.get(i), Utils.convertDateToStringBR(new Date()));
+				else
+					horas=horas+Utils.getDiferencaData(datas.get(i), datas.get(i+1));
+			}
 		}
-		this.frequencia_semanal = (int) horas;
+		
+		this.frequencia_mensal = (int) horas;
 	}
 
 	public ArrayList<RegIN> getRegistros() {
@@ -75,8 +87,8 @@ public class Tag {
 	@Override
 	public String toString() {
 		if (tagId==-4){
-			return "";//"<html> &emsp Nome: " + nome+"&emsp&emsp&emsp&emsp&emsp entrada: "+Utils.getSoHorario(data_hora)+"<br>"
-				//+ "-----------------------------------------------------------------------" + " </span></html>";
+			return "<html> &emsp " + nome+"&emsp&emsp&emsp&emsp&emsp&emsp&emsp CH: "+frequencia_mensal+"h<br>"
+					+ " </span></html>";
 		}
 		if (tagId == -1) {
 			return "Nenhum registro realizado";

@@ -2,8 +2,11 @@ package interfaces;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -18,6 +21,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import org.json.JSONException;
@@ -82,7 +86,9 @@ public class JIFRelSemana extends JInternalFrame {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(20, 75, 200, 150);
 		contentPane.add(scrollPane);
+		
 		listTags = new JList<Tag>(tagLM);
+		listTags.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(listTags);
 		
 		lblIntervalo = new JLabel("intervalo");
@@ -93,7 +99,7 @@ public class JIFRelSemana extends JInternalFrame {
 		JButton btnSalvar = new JButton("SALVAR");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Utils.save(regs);
+				Utils.saveCHS(tags);
 			}
 		});
 		btnSalvar.setBounds(35, 250, 120, 25);
@@ -159,7 +165,6 @@ public class JIFRelSemana extends JInternalFrame {
 								}
 								if(tags.size() == 0) {
 									System.out.println("ta nulo!!! :x");
-									//tagLM.addElement(new Tag("",""));
 								}
 							} catch (Exception e) {
 								e.printStackTrace();
@@ -194,7 +199,7 @@ public class JIFRelSemana extends JInternalFrame {
 					tagLM.addElement(r);
 				}
 				if(tags.size() == 0) {
-					tagLM.addElement(new Tag("",""));
+					//tagLM.addElement(new Tag("",""));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -204,5 +209,26 @@ public class JIFRelSemana extends JInternalFrame {
 		listTags = new JList<Tag>(tagLM);
 		scrollPane.setViewportView(listTags);
 		
+		
+		listTags.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        @SuppressWarnings("unchecked")
+				JList<Tag> list = (JList<Tag>) evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		        	 Rectangle r = list.getCellBounds(0, list.getLastVisibleIndex()); 
+		        	 if (r != null && r.contains(evt.getPoint())) { 
+		        		 // Double-click detected
+		        		 int index = list.locationToIndex(evt.getPoint());
+		        		 if(tags.get(index).getFrequencia_semanal()>0){
+		        			 JIFRelatorioPorTag obj = new JIFRelatorioPorTag(tags.get(index).getRegistros());
+		        			 getDesktopPane().add(obj);
+		        		 }
+		        		  
+		        	 }
+		        } 
+		    	
+		    }
+		});
+				
 	}
 }

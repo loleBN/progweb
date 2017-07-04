@@ -1,9 +1,11 @@
 package interfaces;
 
 import java.awt.EventQueue;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,10 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import org.json.JSONException;
-
-import basic.FreqGraph;
-import basic.RegIN;
+import basic.Tag;
 import basic.Utils;
 import webservice.WebService;
 
@@ -30,16 +29,15 @@ public class JIFRelMes extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private Calendar cal;
 	private JPanel contentPane;
-	JList<RegIN> listStatusIN;
+	JList<Tag> jListTags;
 	JScrollPane scrollPane;
-	DefaultListModel<RegIN> registroLM;
+	DefaultListModel<Tag> tagLM;
 	private JButton btnSair;
-	ArrayList<RegIN> regs;
+	ArrayList<Tag> tags;
 	private JComboBox<String> comboBox;
 	String[] mesesDoAno = new String[] {"Janeiro", "Fevereiro",
             "Março", "Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"};
-	private ArrayList<FreqGraph> lfreq;
-	private Date dateCalendar;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -63,7 +61,7 @@ public class JIFRelMes extends JInternalFrame {
 		setTitle("Relatório Por Mês");	
 		setIconifiable(true);
 		setClosable(true);
-		setBounds(50, 50, 434, 483);
+		setBounds(50, 50, 434, 330);
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
@@ -72,21 +70,21 @@ public class JIFRelMes extends JInternalFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		registroLM = new DefaultListModel<RegIN>();
+		tagLM = new DefaultListModel<Tag>();
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(60, 75, 300, 310);
+		scrollPane.setBounds(60, 75, 300, 150);
 		contentPane.add(scrollPane);
-		listStatusIN = new JList<RegIN>(registroLM);
-		scrollPane.setViewportView(listStatusIN);
+		jListTags = new JList<Tag>(tagLM);
+		scrollPane.setViewportView(jListTags);
 		
 		JButton btnSalvar = new JButton("SALVAR");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Utils.save(regs);
+				Utils.saveCHM(tags);
 			}
 		});
-		btnSalvar.setBounds(60, 410, 110, 25);
+		btnSalvar.setBounds(60, 250, 110, 25);
 		contentPane.add(btnSalvar);
 		
 		btnSair = new JButton("SAIR");
@@ -95,25 +93,14 @@ public class JIFRelMes extends JInternalFrame {
 				dispose();
 			}
 		});
-		btnSair.setBounds(245, 410, 110, 25);
+		btnSair.setBounds(245, 250, 110, 25);
 		contentPane.add(btnSair);
 		
 		JButton btnGraph = new JButton("");
-		btnGraph.setIcon(new ImageIcon(JIFRelatorioHSM.class.getResource("/drawables/graph.png")));
+		btnGraph.setIcon(new ImageIcon(JIFRelatorioPorTag.class.getResource("/drawables/graph.png")));
 		btnGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				try {
-					lfreq = WebService.getFreqByWeek(dateCalendar);
-					GraphDrawTeste obj = new GraphDrawTeste(lfreq);
-					contentPane.getParent().add(obj);
-					obj.setVisible(true);
-					
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (JSONException e1) {
-					e1.printStackTrace();
-				}
 			}
 		});
 		btnGraph.setBounds(190, 410, 35, 35);
@@ -129,17 +116,14 @@ public class JIFRelMes extends JInternalFrame {
 		        try {
 		        	int selectedIndex = comboBox.getSelectedIndex()+1;
 					if(selectedIndex<10)
-						regs = WebService.getRegsByMonth("0"+selectedIndex+"/"+cal.get(Calendar.YEAR));
+						tags = WebService.getFHByMonth("0"+selectedIndex+"/"+cal.get(Calendar.YEAR));
 					else
-						regs = WebService.getRegsByMonth(selectedIndex+"/"+cal.get(Calendar.YEAR));
-					registroLM.removeAllElements();
-					for (RegIN r : regs) {
-						registroLM.addElement(r);
-						System.out.println("r: "+r);
+						tags = WebService.getFHByMonth(selectedIndex+"/"+cal.get(Calendar.YEAR));
+					tagLM.removeAllElements();
+					for (Tag r : tags) {
+						tagLM.addElement(r);
 					}
-					if(regs.size() == 0) {
-						registroLM.addElement(new RegIN(-1,"", "","", -1));
-					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -155,23 +139,43 @@ public class JIFRelMes extends JInternalFrame {
 		try {
 			int index = comboBox.getSelectedIndex()+1;
 			if(index<10)
-				regs = WebService.getRegsByMonth("0"+index+"/"+cal.get(Calendar.YEAR));
+				tags = WebService.getFHByMonth("0"+index+"/"+cal.get(Calendar.YEAR));
 			else
-				regs = WebService.getRegsByMonth(index+"/"+cal.get(Calendar.YEAR));
-			registroLM.removeAllElements();
-			for (RegIN r : regs) {
-				registroLM.addElement(r);
-				System.out.println("r: "+r);
+				tags = WebService.getFHByMonth(index+"/"+cal.get(Calendar.YEAR));
+			tagLM.removeAllElements();
+			for (Tag r : tags) {
+				tagLM.addElement(r);
 			}
-			if(regs.size() == 0) {
-				registroLM.addElement(new RegIN(-1,"", "","", -1));
+			if(tags.size() == 0) {
+				System.out.println("tags size is null");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		listStatusIN = new JList<RegIN>(registroLM);
-		scrollPane.setViewportView(listStatusIN);
+		jListTags = new JList<Tag>(tagLM);
+		scrollPane.setViewportView(jListTags);
+		
+		jListTags.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        @SuppressWarnings("unchecked")
+				JList<Tag> list = (JList<Tag>) evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		        	 Rectangle r = list.getCellBounds(0, list.getLastVisibleIndex()); 
+		        	 if (r != null && r.contains(evt.getPoint())) { 
+		        		 // Double-click detected
+		        		 int index = list.locationToIndex(evt.getPoint());
+		        		 System.out.println("reg  sizemensal:"+tags.get(index).getRegistros().size());
+		        		 if(tags.get(index).getFrequencia_mensal()>0){
+		        			 JIFRelatorioPorTag obj = new JIFRelatorioPorTag(tags.get(index).getRegistros());
+		        			 getDesktopPane().add(obj);
+		        		 }
+		        		  
+		        	 }
+		        } 
+		    	
+		    }
+		});
 	}
 
 }

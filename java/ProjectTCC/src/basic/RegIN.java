@@ -50,14 +50,27 @@ public class RegIN {
 	
 	@Override
 	public String toString() {
-		if (regId==-4){
+		if  (regId==-10){
+			if (status==1)
+				return "<html>  &emsp Data: " + Utils.getSoData(data_hora)  + "&emsp&emsp&emsp&emsp&emsp&emsp&emsp "
+						+ "entrada: " + Utils.getSoHorario(data_hora) + "<br>" 
+						+ "---------------------------------------------------------------------- <br>" + " </span></html>";
+						
+			return "<html> &emsp Data: " + Utils.getSoData(data_hora)  + "&emsp&emsp&emsp&emsp&emsp&emsp&emsp "
+					+ "saida: " + Utils.getSoHorario(data_hora) + "<br>" 
+					+ "---------------------------------------------------------------------- <br>" + " </span></html>";
+		}else if (regId==-2){
+			return "<html> &emsp Data: " + Utils.getSoData(data_hora) +"&emsp&emsp&emsp&emsp&emsp&emsp&emsp entrada: "+Utils.getSoHorario(data_hora)+"<br>"
+				+ "-----------------------------------------------------------------------" + " </span></html>";
+		}
+		else if (regId==-4){
 			return "<html> &emsp Nome: " + nome+"&emsp&emsp&emsp&emsp&emsp entrada: "+Utils.getSoHorario(data_hora)+"<br>"
 				+ "-----------------------------------------------------------------------" + " </span></html>";
 		}
-		if (regId == -1) {
+		else if (regId == -1) {
 			return "Nenhum registro realizado";
 		} 
-		if (regId == -3) {
+		else if (regId == -3) {
 			return "Erro ao carregar dados do servidor!";
 		} else {
 			if (status==1)

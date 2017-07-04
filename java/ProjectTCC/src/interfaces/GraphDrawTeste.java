@@ -22,7 +22,7 @@ public class GraphDrawTeste extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JIFRelatorioHSM frame = new JIFRelatorioHSM();
+					JIFRelatorioPorTag frame = new JIFRelatorioPorTag();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

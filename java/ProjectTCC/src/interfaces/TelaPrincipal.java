@@ -25,7 +25,7 @@ public class TelaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	JDesktopPane jdpPrincipal;
-	JIFRelatorioHSM obj;
+	JIFRelatorioPorTag obj;
 	JIFRelData objData;
 	JIFRelSemana objSemana;
 	JIFRelMes objMes;
