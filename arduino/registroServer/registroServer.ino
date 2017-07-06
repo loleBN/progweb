@@ -13,18 +13,17 @@ void setup()
 void loop()
 {
     if (rfid.isCard()) {
-        cmd=String("python /home/root/lolebn/registro.py ");
+        cmd=String("python /home/tcclolebn/registro_plus_led.py ");
           String strID="";
           if (rfid.readCardSerial()) {
             for(int i=0;i<5;i++) 
               strID=strID+rfid.serNum[i];
  
             cmd+=strID;   
-            
+            Serial.println(strID.buffer);
             //Serial.println(cmd.buffer);
             system(cmd.buffer);  
             cmd="";
-            Serial.println("Registro inserido");
             delay(3000);     
           }
           

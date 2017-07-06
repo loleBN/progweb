@@ -9,7 +9,21 @@ import calendar
 from datetime import datetime, timedelta
 import sys
 import urllib2
+import mraa     # For accessing the GPIO
+import time     # For sleeping between blinks
 #######################################################################
+
+LED_RED_GPIO = 6                   # we are using 6 pin
+LED_BLUE_GPIO = 7                   # we are using 7 pin
+blinkLedRed = mraa.Gpio(LED_RED_GPIO) # Get the LED pin object
+blinkLedBlue = mraa.Gpio(LED_BLUE_GPIO) # Get the LED pin object
+blinkLedRed.dir(mraa.DIR_OUT)     # Set the direction as output
+blinkLedBlue.dir(mraa.DIR_OUT)     # Set the direction as output
+ledState = False               # LED is off to begin with
+blinkLedRed.write(0)
+blinkLedBlue.write(0)
+#######################################################################
+
 def getDT():
 	d = datetime.now()
 	dia = d.day
@@ -46,6 +60,12 @@ if __name__=='__main__':
 	contents = f.read()
 	f.close()
 	if contents == "-1":
-		print "-1" #retornar isso pro arduino??
+		blinkLedRed.write(1)
+		time.sleep(1)
+		blinkLedRed.write(0)
+		print -1 #retornar isso pro arduino??
 	if contents == "1":
-		print "1" 	
+		blinkLedBlue.write(1)
+		time.sleep(1)
+		blinkLedBlue.write(0)
+		print 1 	
