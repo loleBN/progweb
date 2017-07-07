@@ -92,7 +92,8 @@ public class Tag {
 			return "<html> &emsp " + nome+"&emsp&emsp&emsp&emsp CH: "+frequencia_mensal+"h<br>"
 					+ " </span></html>";
 		}
-		return "sem registro de carga horaria";
+		return "<html> &emsp " + nome+"&emsp&emsp&emsp&emsp CH: 0h<br>"
+				+ " </span></html>";
 	}
 	
 }
