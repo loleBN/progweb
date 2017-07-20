@@ -18,6 +18,55 @@ import basic.Tag;
 import basic.Utils;
 
 public class WebService {
+	public static void addTag(Tag tag) throws IOException, JSONException {
+		URL urlEventos = new URL("http://ufam-automation.net/loislene/addTag.php?tag_rfid="+tag.getTag_rfid()+"&nome="+tag.getNome());
+		 new BufferedReader(new InputStreamReader(urlEventos.openStream()));
+	}
+	public static void upTag(Tag tag) throws IOException, JSONException {
+		URL urlEventos = new URL("http://ufam-automation.net/loislene/updateTag.php?tag_rfid="+tag.getTag_rfid()+"&nome="+tag.getNome());
+		System.out.println("http://ufam-automation.net/loislene/updateTag.php?tag_rfid="+tag.getTag_rfid()+"&nome="+tag.getNome());
+		new BufferedReader(new InputStreamReader(urlEventos.openStream()));
+	}
+	public static void rmTag(Tag tag) throws IOException, JSONException {
+		URL urlEventos = new URL("http://ufam-automation.net/loislene/rmTag.php?tag_rfid="+tag.getTag_rfid());
+		new BufferedReader(new InputStreamReader(urlEventos.openStream()));
+	}
+	public static ArrayList<Tag> getTags() throws IOException, JSONException {
+		System.out.println("Baixando Dados...");
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		URL urlEventos = new URL("http://ufam-automation.net/loislene/getTags.php");
+		BufferedReader in = new BufferedReader(new InputStreamReader(urlEventos.openStream()));
+		String inputLine;
+		inputLine = in.readLine();
+		if(!inputLine.equals("-1")){
+			JSONArray tagsL = new JSONArray(inputLine);
+			JSONObject r;
+			
+			for (int i = 0; i < tagsL.length(); i++) {
+				r = new JSONObject(tagsL.getString(i));
+				tags.add(new Tag(r.getString("tag_rfid"), r.getString("nome"),-1));			
+			}
+		}else{
+			tags.add(new Tag("","",-1));		
+	}
+		return tags;
+	}
+	public static Tag getTagsPendentes() throws IOException, JSONException {
+		System.out.println("Baixando Dados...");
+		URL urlEventos = new URL("http://ufam-automation.net/loislene/getTagsPendentes.php");
+		BufferedReader in = new BufferedReader(new InputStreamReader(urlEventos.openStream()));
+		String inputLine;
+		inputLine = in.readLine();
+		if(!inputLine.equals("-1")){
+			System.out.println("json: "+inputLine);
+			JSONArray tagsL = new JSONArray(inputLine);
+			JSONObject r;
+			
+			r = new JSONObject(tagsL.getString(0));
+			return new Tag(r.getString("tag_rfid"), r.getString("date_time"));	
+		}
+		return new Tag("","");
+	}
 	public static ArrayList<RegIN> getRegsNow() throws IOException, JSONException {
 		System.out.println("Baixando Dados...");
 		ArrayList<RegIN> regs = new ArrayList<RegIN>();

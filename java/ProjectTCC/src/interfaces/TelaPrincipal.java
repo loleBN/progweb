@@ -65,6 +65,23 @@ public class TelaPrincipal extends JFrame {
 		JMenu mnOutros = new JMenu("outros");
 		menuBar.add(mnOutros);
 		
+		JMenuItem mntmGer = new JMenuItem("Gerenciar Tags");
+		mntmGer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					frameRG.setIcon(true);
+				} catch (PropertyVetoException e1) {
+					e1.printStackTrace();
+				}
+				//if(obj!=null)
+				//	obj.dispose();
+				JIFAdminLog objAdmin = new JIFAdminLog();
+				jdpPrincipal.add(objAdmin);
+				objAdmin.setVisible(true);
+			}
+		});
+		mnOutros.add(mntmGer);
+		
 		JMenuItem mntmSobre = new JMenuItem("Sobre");
 		mntmSobre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

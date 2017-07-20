@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Tag {
+	private int id;
 	private String tag_rfid;
 	private String nome;
 	private int frequencia_semanal;
@@ -17,8 +18,26 @@ public class Tag {
 		this.frequencia_semanal = 0;
 		this.frequencia_mensal = 0;
 		this.registros = new ArrayList<RegIN>();
+		this.setId(0);
+	}
+	public Tag(String tag_rfid, String nome, int id) {
+		super();
+		this.tag_rfid = tag_rfid;
+		this.nome = nome;
+		this.frequencia_semanal = 0;
+		this.frequencia_mensal = 0;
+		this.registros = new ArrayList<RegIN>();
+		this.setId(id);
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getTag_rfid() {
 		return tag_rfid;
 	}
@@ -85,7 +104,11 @@ public class Tag {
 	
 	@Override
 	public String toString() {
-		if (frequencia_semanal!=0){			
+		if(id==-1){
+			return "<html> &emsp tag: " + tag_rfid+"&emsp&emsp&emsp&emsp&emsp "+nome+"<br>"
+					+ " </span></html>";
+		}
+		else if (frequencia_semanal!=0){			
 			return "<html> &emsp " + nome+"&emsp&emsp&emsp&emsp CH: "+frequencia_semanal+"h<br>"
 					+ " </span></html>";
 		}else if (frequencia_mensal!=0){			

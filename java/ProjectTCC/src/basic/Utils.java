@@ -130,7 +130,10 @@ public class Utils {
 		 
 		    gravarArq.printf("REGISTROS%n");
 		    for (int i=0; i<array.size(); i++) {
-		      gravarArq.printf(getDTH(array.get(i).getData_hora())+ " " + array.get(i).getNome() +"%n");
+		    	if(array.get(i).getStatus()==1)
+		    		gravarArq.printf(getDTH(array.get(i).getData_hora())+ "   entrada   " + array.get(i).getNome() +"%n");
+		    	else
+		    		gravarArq.printf(getDTH(array.get(i).getData_hora())+ "   saida     " + array.get(i).getNome() +"%n");
 		    }
 		    gravarArq.printf("%n");
 		 
@@ -159,7 +162,7 @@ public class Utils {
 		 
 		    gravarArq.printf("RELATORIO DE CH%n");
 		    for (int i=0; i<array.size(); i++) {
-		      gravarArq.printf(array.get(i).getNome()+ " " + array.get(i).getFrequencia_semanal() +"%n");
+		      gravarArq.printf(array.get(i).getNome()+ " " + array.get(i).getFrequencia_semanal() +"h %n");
 		    }
 		    gravarArq.printf("%n");
 		 
@@ -188,7 +191,7 @@ public class Utils {
 		 
 		    gravarArq.printf("RELATORIO DE CH%n");
 		    for (int i=0; i<array.size(); i++) {
-		      gravarArq.printf(array.get(i).getNome()+ " " + array.get(i).getFrequencia_mensal() +"%n");
+		      gravarArq.printf(array.get(i).getNome()+ " " + array.get(i).getFrequencia_mensal() +"h %n");
 		    }
 		    gravarArq.printf("%n");
 		 
