@@ -46,6 +46,19 @@ public class Utils {
         }
         return mes;
 	}
+	public static String parseToDataGraph(String data) {
+		Date date;
+		String [] meses = {"jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"};
+		try {
+			date = new SimpleDateFormat("dd/MM/yyyy").parse(data);
+			String dia = new SimpleDateFormat("dd").format(date);
+			String mes = new SimpleDateFormat("MM").format(date);
+			return dia+"/"+meses[Integer.parseInt(mes)-1];
+		} catch (ParseException e) {
+			System.out.println("Erro = "+e.getMessage());
+		}
+		return null;
+	}
 	public static String getSoData(String data) {
 		Date date;
 		try {

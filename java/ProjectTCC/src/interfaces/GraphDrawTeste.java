@@ -2,11 +2,10 @@ package interfaces;
 
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 import basic.FreqGraph;
+import basic.Utils;
 
 import java.awt.EventQueue;
 import java.util.ArrayList;
@@ -32,16 +31,26 @@ public class GraphDrawTeste extends JInternalFrame {
 	}
    
    public GraphDrawTeste(ArrayList<FreqGraph> lFreq) {
-         
-	   XYSeries series = new XYSeries("Average Weight");
+	   	         
+	   //XYSeries series = new XYSeries("Average Weight");
+	   DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 	   
-	   for(int i=0;i<lFreq.size();i++)
-		   series.add(i, lFreq.get(i).getFrequencia());
+	   for(int i=0;i<lFreq.size();i++){
+		//   series.add(i, lFreq.get(i).getFrequencia());
+		   dataset.setValue(lFreq.get(i).getFrequencia(), "Frequencia", Utils.parseToDataGraph(lFreq.get(i).getData()));
+	   }
+	   
+		JFreeChart chart = ChartFactory.createBarChart("Frequência Semanal",
+		  "Periodo", "Frequencia", dataset, PlotOrientation.VERTICAL,
+		   false, true, false);
 		
-		XYDataset xyDataset = new XYSeriesCollection(series);
-		JFreeChart chart = ChartFactory.createXYLineChart("Frequência Semanal", "Day", "Freq", xyDataset, PlotOrientation.VERTICAL, true, true, false);
+		//XYDataset xyDataset = new XYSeriesCollection(series);
+		//JFreeChart chart = ChartFactory.createXYLineChart("Frequência Semanal", "Day", "Freq", xyDataset, PlotOrientation.VERTICAL, true, true, false);
+		
 		ChartFrame frame1=new ChartFrame("Freq Semanal",chart);
 		frame1.setVisible(true);
-		frame1.setSize(300,300);
+		frame1.setSize(800,250);
+		
+
    }
 }

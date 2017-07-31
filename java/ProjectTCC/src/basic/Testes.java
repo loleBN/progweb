@@ -1,31 +1,37 @@
 package basic;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
+
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class Testes {
 
 	public static void main(String[] args) {
-		Date dtInicial, dtFinal;
-		try {
-			dtInicial = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse("27/06/2017 18:43");
-			dtFinal = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse("28/06/2017 20:12");
-			
-			//Convertendo as datas para milisegundos
-	        long milisecondBegin = dtInicial.getTime();
-	        long milisecondEnd = dtFinal.getTime();
-	        //Subtraindo os milisegundos, para obter a diferença
-	        long milisecondResult = -milisecondBegin + milisecondEnd;
-	        System.out.println(milisecondResult /3600000.0);
-	        
-	        
-			
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 
-}
+		
+			 
+			 // Create a simple Bar chart
+			 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+			  dataset.setValue(6, "Profit", "Jane");
+			  dataset.setValue(7, "Profit", "Tom");
+			  dataset.setValue(8, "Profit", "Jill");
+			  dataset.setValue(5, "Profit", "John");
+			  dataset.setValue(12, "Profit", "Fred");
+			JFreeChart chart = ChartFactory.createBarChart("Comparison between Salesman",
+			  "Salesman", "Profit", dataset, PlotOrientation.VERTICAL,
+			   false, true, false);
+			try {
+			     ChartUtilities.saveChartAsJPEG(new File("/home/lolebn/Imagens/chart.jpg"), chart, 500, 300);
+			} catch (IOException e) {
+			     System.err.println("Problem occurred creating chart.");
+			}
+	  	
+		
+	}
 
 }
