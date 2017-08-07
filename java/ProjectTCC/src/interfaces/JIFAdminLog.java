@@ -62,6 +62,7 @@ public class JIFAdminLog extends JInternalFrame {
 		setClosable(true);
 		setBounds(100, 100, 519, 338);
 		getContentPane().setLayout(null);
+		setTitle("Gerenciamento de Tags");
 		
 		tagLM = new DefaultListModel<Tag>();
 		

@@ -261,7 +261,7 @@ public class WebService {
 					for (int c = 0; c < regsL.length(); c++) {
 						reg = new JSONObject(regsL.getString(c));
 						datas.add(reg.getString("dt"));	
-						regs.add(new RegIN(-2,reg.getString("tag"), reg.getString("nome"),reg.getString("dt"), reg.getInt("status")));
+						regs.add(new RegIN(-10,reg.getString("tag"), reg.getString("nome"),reg.getString("dt"), reg.getInt("status")));
 					}
 					tags.get(i).setFrequencia_semanal(datas);
 					tags.get(i).setRegistros(regs);
